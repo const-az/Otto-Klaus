@@ -1,18 +1,19 @@
 <template>
   <v-app>
+    <!-- AppBar -->
     <app-bar></app-bar>
     <v-main align="center">
-      <!-- TOYS LIST -->
+      <!-- Toys List -->
       <toys-list></toys-list>
-      <!-- ADD NEW PRODUCT BUTTON -->
+      <!-- Add new product button -->
       <v-btn depressed color="cyan darken-2" class="mt-15" fab dark @click="displayToyform">
         <v-icon dark>mdi-plus</v-icon>
       </v-btn>
-      <!-- FORM -->
+      <!-- Form -->
       <toy-form></toy-form>
-      <!-- MESSAGE -->
+      <!-- Message -->
       <message-form></message-form>
-      <!-- LOADING -->
+      <!-- Loading -->
       <v-overlay :value="loading">
         <v-progress-circular indeterminate size="64"></v-progress-circular>
       </v-overlay>
@@ -35,7 +36,9 @@ export default {
     ToyForm,
     MessageForm
   },
+  // To show form to edit or add new products
   methods: mapActions(['displayToyform']),
+  // Loading state
   computed: mapState(['loading'])
 }
 </script>

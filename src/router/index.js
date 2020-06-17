@@ -2,11 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Toys from '../views/Toys.vue'
 import Login from '../views/Login.vue'
+import NotFound from '../views/NotFound.vue'
 import Firebase from 'firebase'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'toys',
@@ -20,6 +21,11 @@ Vue.use(VueRouter)
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '*',
+    name: 'notfound',
+    component: NotFound
   }
 ]
 
@@ -29,6 +35,7 @@ const router = new VueRouter({
   routes
 })
 
+// Requires authentication to enter
 router.beforeEach((to, from, next) => {
   let user = Firebase.auth().currentUser;
   let authRequired = to.matched.some(route => route.meta.login);

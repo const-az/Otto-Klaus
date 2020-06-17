@@ -1,16 +1,17 @@
 <template>
   <v-container>
-    <!-- TOYS LIST -->
+    <!-- Toys list -->
     <v-card flat>
-      <!-- HEADER -->
+      <!-- Header -->
       <v-card-title>
         Lista de juguetes
         <v-spacer></v-spacer>
+        <!-- Search field -->
         <v-text-field v-model="search" append-icon="mdi-magnify" label="Búsqueda" single-line hide-details></v-text-field>
       </v-card-title>
-      <!-- CONTENT -->
+      <!-- Content -->
       <v-data-table :headers="headers" :items="toys" :search="search" no-results-text="No existen productos registrados con esas características." no-data-text="No hay productos disponibles..." hide-default-footer>
-        <!-- ACTION -->
+        <!-- Buttons (edit/delete) -->
         <template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="editToy(item.id)">mdi-pencil</v-icon>
           <v-icon small @click="deleteConfirmation(item.id)">mdi-delete</v-icon>
@@ -28,6 +29,7 @@ export default {
   data() {
       return {
         search: '',
+        // Data for table
         headers: [
           {
             text: 'Código SKU',
@@ -42,8 +44,10 @@ export default {
         ],
       }
     },
+    // Actions and states from store
     methods: mapActions(['updateEdit', 'editToy','deleteConfirmation']),
     computed: mapState(['toys','edit']),
+    // Displays all toys registered on mounted
     mounted(){
       this.$store.dispatch('getToys')
     },
