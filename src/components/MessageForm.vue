@@ -3,8 +3,8 @@
       <v-card class="pa-4">
         <v-card-text>
           <v-container>
-            <v-card-title v-if="!edit">¿Estás seguro que deseas borrar <b>{{currentToy.data.name}}</b>?</v-card-title>
-            <v-card-title v-if="edit">Producto borrado exitosamente.</v-card-title>
+            <v-card-title class="text-subtitle-1" v-if="!edit">¿Seguro que deseas borrar este juguete?</v-card-title>
+            <v-card-title class="text-subtitle-1" v-if="edit">Producto borrado exitosamente.</v-card-title>
           </v-container>
         </v-card-text>
         <v-card-actions v-if="edit">

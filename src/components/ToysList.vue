@@ -13,7 +13,7 @@
         <!-- ACTION -->
         <template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="editToy(item.id)">mdi-pencil</v-icon>
-          <v-icon small @click="deleteConfirmation(item.id, item.data.name)">mdi-delete</v-icon>
+          <v-icon small @click="deleteConfirmation(item.id)">mdi-delete</v-icon>
         </template>
       </v-data-table>
     </v-card>

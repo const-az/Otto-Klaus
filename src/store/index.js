@@ -117,9 +117,8 @@ export default new Vuex.Store({
         dispatch('displayToyform')
       })
     },
-    deleteConfirmation({commit, state}, id, name){
+    deleteConfirmation({commit, state}, id){
       state.currentToy.id = id
-      commit('UPDATE_NAME', name)
       commit('SHOW_MESSAGE_FORM')
     },
     deleteToy({commit, dispatch, state}){
