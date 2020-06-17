@@ -4,14 +4,16 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-const emptyToy = {
-                    id: null,
-                    data:{
-                      code: '',
-                      name: '',
-                      price: 0,
-                      stock: 0
-                    }
+function defaultToy(){
+  return {
+    id: null,
+    data:{
+      code: '',
+      name: '',
+      price: 0,
+      stock: 0
+    }
+  }
 }
 
 export default new Vuex.Store({
@@ -21,16 +23,18 @@ export default new Vuex.Store({
     edit: false,
     showForm: false,
     messageModal: false,
-    currentToy: emptyToy,
+    currentToy: defaultToy()
   },
   mutations: {
-    UPDATE_LOADING(state){
-      state.loading = !state.loading
+    SHOW_LOADING(state){
+      state.loading = true
+    },
+    HIDE_LOADING(state){
+      state.loading = false
     },
     // TOYS
     GET_TOYS(state, toys){
       state.toys = toys
-      state.loading = false
     },
     // EDIT
     TRUE_EDIT(state){
@@ -46,9 +50,13 @@ export default new Vuex.Store({
     HIDE_TOY_FORM(state){
       state.showForm = false
     },
-    // SET
-    SET_CURRENT_TOY(state, toy){
-      state.currentToy = toy
+    // RESET
+    RESET_CURRENT_TOY(state){
+      state.currentToy.id = null
+      const empty = defaultToy();
+      Object.keys(empty.data).forEach(key => {
+        state.currentToy.data[key] = empty.data[key]
+      });
     },
     // UPDATE DATA
     UPDATE_CODE(state, code){
@@ -74,37 +82,38 @@ export default new Vuex.Store({
   actions: {
     // CRUD
     getToys({commit}){
-      commit('UPDATE_LOADING')
+      commit('SHOW_LOADING')
       axios.get('https://us-central1-ottoklaus-72824.cloudfunctions.net/toys/toys', { headers: { "Content-type": "text/plain"}})
       .then((accept) => {
         let data = accept.data
         commit('GET_TOYS', data)
-        commit('SET_CURRENT_TOY', emptyToy)
+        commit('HIDE_LOADING')
+        commit('RESET_CURRENT_TOY')
       })
     },
     postToy({dispatch, commit, state}){
       if(state.currentToy.id!=null){
-        commit('UPDATE_LOADING')
+        commit('SHOW_LOADING')
         axios.put(`https://us-central1-ottoklaus-72824.cloudfunctions.net/toys/toy/${state.currentToy.id}`, state.currentToy.data, { headers:{'Context-type': 'application/json'} })
         .then(() => {
-          commit('UPDATE_LOADING')
+          commit('HIDE_LOADING')
           dispatch('getToys')
         })
       }else{
-        commit('UPDATE_LOADING')
+        commit('SHOW_LOADING')
         axios.post('https://us-central1-ottoklaus-72824.cloudfunctions.net/toys/toy', state.currentToy.data, { headers:{'Context-type': 'application/json'} })
         .then(() => {
-          commit('UPDATE_LOADING')
+          commit('HIDE_LOADING')
           dispatch('getToys')
         })
       }
     },
-    editToy({dispatch, commit}, id){
-      commit('UPDATE_LOADING')
+    editToy({dispatch, commit, state}, id){
+      commit('SHOW_LOADING')
       axios.get(`https://us-central1-ottoklaus-72824.cloudfunctions.net/toys/toy/${id}`, { headers:{'Context-type': 'application/json'} })
       .then((response) => {
-        commit('UPDATE_LOADING')
-        commit('SET_CURRENT_TOY', response.data)
+        commit('HIDE_LOADING')
+        state.currentToy = response.data
         dispatch('displayToyform')
       })
     },
@@ -115,19 +124,19 @@ export default new Vuex.Store({
     },
     deleteToy({commit, dispatch, state}){
       commit('HIDE_MESSAGE_FORM')
-      commit('UPDATE_LOADING')
+      commit('SHOW_LOADING')
        axios.delete(`https://us-central1-ottoklaus-72824.cloudfunctions.net/toys/toy/${state.currentToy.id}`, { headers:{'Context-type': 'application/json'} })
         .then(() => {
           commit('TRUE_EDIT')
           dispatch('getToys')
-          commit('UPDATE_LOADING')
+          commit('HIDE_LOADING')
           commit('SHOW_MESSAGE_FORM')
         })
     },
     closeMessage({commit}){
       commit('HIDE_MESSAGE_FORM')
       commit('FALSE_EDIT')
-      commit('SET_CURRENT_TOY', emptyToy)
+      commit('RESET_CURRENT_TOY')
     },
     // UPDATING DATA
     updateCode({commit}, code){
@@ -151,7 +160,7 @@ export default new Vuex.Store({
     },
     hideEmptyToyform({commit}){
       commit('HIDE_TOY_FORM')
-      commit('SET_CURRENT_TOY', emptyToy)
+      commit('RESET_CURRENT_TOY')
     },
   },
   modules: {
