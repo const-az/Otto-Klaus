@@ -1,24 +1,42 @@
-# ottoklaus
+# OTTOKLAUS
+
+Inventory exercise with Firebase.
 
 ## Project setup
+
+1. Root folder
 ```
 npm install
 ```
+---
 
-### Compiles and hot-reloads for development
+2. Firebase config
+
 ```
-npm run serve
+mkdir config
+touch firebase.js
+```
+Inside firebase.js, paste your own Firebase SDK snippet.
+
+---
+
+3. Firebase functions folder
+
+```
+cd functions
+npm install
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+---
 
-### Lints and fixes files
-```
-npm run lint
-```
+* `npm run serve` - hot-reloads for development.
+* `npm run build` - minifies for production.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+---
+
+This proyect was built with Vuetify and Firebase Cloud Functions, Authentication, Database and Hosting.
+ 
+You can see it running here: [https://ottoklaus-72824.web.app](https://ottoklaus-72824.web.app)
+
+---
+2020.
