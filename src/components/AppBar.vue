@@ -7,7 +7,7 @@
     <v-spacer></v-spacer>
     <!-- Logout button -->
     <v-btn text @click="logout">
-      <span class="mr-2">Cerrar sesión</span>
+      <span class="mr-2"> Cerrar sesión</span>
       <v-icon>mdi-lock</v-icon>
     </v-btn>
   </v-app-bar>
@@ -21,7 +21,7 @@ export default {
   methods:{
     // Pushes into login view when sign out
     logout(){
-      Firebase.auth().signOut().then(() => {
+        Firebase.auth().signOut().then(() => {
         this.$router.push('/login')
       })
     }

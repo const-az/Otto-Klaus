@@ -45,7 +45,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   methods: {
     ...mapActions(['hideToyform', 'updateCode', 'updateName', 'updateStock', 'updatePrice', 'postToy','hideEmptyToyform']),
-    // Saves and close form
+    // Saves and closes form
     saveToy(){
       this.hideToyform()
       this.postToy()
