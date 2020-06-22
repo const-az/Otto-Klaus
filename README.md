@@ -34,7 +34,7 @@ npm install
 
 ---
 
-This proyect was built with Vuetify and Firebase Cloud Functions, Authentication, Database and Hosting.
+This project was built with Vuetify and Firebase Cloud Functions, Authentication, Database and Hosting.
  
 You can see it running here: [https://ottoklaus-72824.web.app](https://ottoklaus-72824.web.app)
 
